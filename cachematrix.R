@@ -1,13 +1,18 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Created 17 May 2015, by rlutz for Coursera R Programming Course
 
-## test with
-## m <- rbind(c(1,0,0), c(1,1,0), c(1,1,1))
-## cacheSolve(makeCacheMatrix(cacheSolve(makeCacheMatrix(m))))
-## should report the original matrix !
+# Matrix inversion is usually a costly computation and there may be some benefit
+# to caching the inverse of a matrix rather than computing it repeatedly. This 
+# solution provides two methods: makeCacheMatrix() and cacheSolve().
+# 
+# makeCacheMatrix() is used to create a speical "matrix" object that can cache 
+# its calculated inverse. cacheSolve() will either calculate the inverted matrix
+# or return the cached solution if it is present. The inversion will only be 
+# calculated during the first retrieval.
 
-## Write a short comment describing this function
 
+## these functions can be tested with accompanying tester.R file !
+
+## makeCacheMatrix() initializes the custom object. Also provides mutator/accessor for inversion 
 makeCacheMatrix <- function(x = matrix()) {
   i <- NULL
   set <- function(y) {
@@ -22,15 +27,13 @@ makeCacheMatrix <- function(x = matrix()) {
        getinverse = getinverse)
 }
 
-## Write a short comment describing this function
-
+## cacheSolve() returns a matrix that is the inverse of 'x'. This function will return a cached instance,
+## if it exists
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        
   i <- x$getinverse()
-  if(!is.null(i)) {
-    message("getting cached data")
+  if(!is.null(i))
     return(i)
-  }
   data <- x$get()
   i <- solve(data, ...)
   x$setinverse(i)
